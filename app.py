@@ -14,7 +14,7 @@ st.caption("THIS IS FOR FUN, DON'T TAKE IT SERIOUSLY")
 tab1, tab2, tab3, tab5 = st.tabs(["Reality Check", 'Excuse generator [to "save" your life]', "Listen to Music", "My Apps :D"])
 
 with tab1:
-    st.header("Can you sruvive any longer???")
+    st.header("THE JUDGE")
 
     job_title = st.text_input("Whats ur job title?", placeholder="e.g., Software Engineer, Youtuber, Student, Vlogger, CEO")
     income = st.number_input("What's your income?", min_value=0, value=0)
