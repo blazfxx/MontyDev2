@@ -1,16 +1,17 @@
 import streamlit as st
 import random
 import time
+from ytmusicapi import YTMusic
 
 st.set_page_config(page_title="Survival Kit", page_icon="🧰")
 st.title("🧰 Survival Kit?")
-st.subheader("Because reality is hard, and lying is easy.")
+st.subheader("Live your life, doesn't matter what others think...")
 st.caption("Created by Muhammad Khan")
 st.caption("THIS IS FOR FUN, DON'T TAKE IT SERIOUSLY")
 
 
 
-tab1, tab2, tab3, tab5 = st.tabs(["Reality Check", "Excuse generator [to save your life?]", "Listen to Music", "My Apps :D"])
+tab1, tab2, tab3, tab5 = st.tabs(["Reality Check", 'Excuse generator [to "save" your life]', "Listen to Music", "My Apps :D"])
 
 with tab1:
     st.header("Can you sruvive any longer???")
@@ -64,15 +65,122 @@ with tab1:
 
 
 with tab2:
-    st.header("Did yyou mess up???")
-    st. subheader("Let us save you!")
+    st.header("100% Perfect, Working Excuse Generator")
+    st.caption("Are you sure you should use this tool to save yourself tho?")
 
     recipient = st.selectbox("Who do you need an excuse for?", ["Boss", "Teacher", "Parent", "Friend", "Coach", "Mom"])
     severty = st.slider("How bad is it?", 1, 10, 5)
 
-    issue = ["the Wifi rounter", "The cloud server", "My pet", "My (electronic) alarm clock", "The cell tower"]
-    action = ["broke down", "caught fire", "exploded", "went missing", "got hacked", "gained consciousness and attacked me"]
-    consequence = ["so I had to call a SWAT team", "so I have to deal with this and cna't come", "so I need 2 more hours", "so I need some time to try to leave alive"]
+    issue = [
+    "the WiFi router",
+    "the cloud server",
+    "my pet",
+    "my alarm clock",
+    "the cell tower",
+    "my laptop",
+    "my car",
+    "my phone",
+    "the power in my area",
+    "the heating system",
+    "my apartment building",
+    "my work PC",
+    "the home security system",
+    "my internet connection",
+    "the elevators in my building"
+    ]
+
+    action = [
+    "stopped working",
+    "crashed unexpectedly",
+    "shut down",
+    "malfunctioned",
+    "stopped responding",
+    "had a critical error",
+    "failed this morning",
+    "went offline",
+    "locked me out",
+    "started rebooting on its own",
+    "lost connection",
+    "required immediate troubleshooting",
+    "had a system fault",
+    "is under maintenance",
+    "is being inspected"
+    ]
+
+    consequence = [
+    "so I'm handling it right now",
+    "so I might be delayed",
+    "so I need some extra time",
+    "so I can't step away yet",
+    "so I'm waiting for support to respond",
+    "so I need to resolve this first",
+    "so I'm stuck for the moment",
+    "so I'm trying to get everything back online",
+    "so I may need to reschedule",
+    "so I have to stay here until it’s fixed",
+    "so I'm running diagnostics right now",
+    "so I need to sort this out before I leave",
+    "so I'm working on getting access again",
+    "so I’m dealing with the situation on priority",
+    "so I’ll update you as soon as it’s stable again"
+    ]
+
+    techinal_issue = [
+    "the electrical subsystem",
+    "the processor’s thermal core",
+    "the network transmission layer",
+    "the internal voltage regulator",
+    "the quantum-level charge distribution",
+    "the system’s main capacitor bank",
+    "the motherboard’s micro-circuits",
+    "the data integrity module",
+    "the device’s magnetic field alignment",
+    "the power-delivery pathway",
+    "the computational cell structure",
+    "the wireless signal lattice",
+    "the hardware stability matrix",
+    "the digital memory clusters",
+    "the primary operational node"
+    ]
+
+    techinal_action = [
+    "lost atomic stability",
+    "dropped its electron flow unexpectedly",
+    "fell out of thermal equilibrium",
+    "entered a recursive fault state",
+    "collapsed under voltage drift",
+    "depolarized at the micro level",
+    "stopped maintaining charge balance",
+    "began oscillating outside safe thresholds",
+    "failed to realign its magnetic pathways",
+    "started looping during system excitation",
+    "triggered a chain of integrity warnings",
+    "went into uncontrolled energy dissipation",
+    "lost synchronization with its core cycle",
+    "began producing unstable charge gradients",
+    "experienced molecular-level interference"
+    ]
+
+    techinal_consequence = [
+    "so I have to stabilize the system before it causes further damage",
+    "so I'm running emergency diagnostics to prevent data loss",
+    "so I need time to safely discharge the affected components",
+    "so the device is stuck in a recovery loop until I can intervene",
+    "so I can't leave until the energy levels normalize",
+    "so I have to isolate the fault to avoid a full system failure",
+    "so I'm waiting for the system to re-establish charge balance",
+    "so the hardware needs immediate recalibration",
+    "so I need to send it in for controlled repair procedures",
+    "so I'm manually restoring operational stability right now",
+    "so the system is offline until the fault cycle breaks",
+    "so I'm monitoring it closely before powering anything else up",
+    "so I'm preventing a full shutdown by staying on-site",
+    "so I have to bring it back into acceptable operating parameters",
+    "so it’s unsafe to disconnect until the energy settles"
+    ]
+
+
+    techinal = st.checkbox("Make it more technical...")
 
     if st.button("Generate Excuse"):
         part1 = random.choice(issue)
@@ -82,15 +190,92 @@ with tab2:
         if severty > 8:
             st.error("🛑 This is serious. Use this:")
             excuse = f"EMERGENCY: {part1} {part2} dangerously. I am speaking to the FBI, the Police, AND the SWAT Team."
-        elif recipient == "Mom":
-            st.error("Nah bro, your cooked, we cant help. The slipper never misses its target...")
+        elif techinal == False and recipient == "Mom":
+            excuse = ("Nah bro, your cooked, we cant help. The slipper never misses its target...")
+        elif techinal == True and recipient != "Mom":
+            part1 = random.choice(techinal_issue)
+            part2 = random.choice(techinal_action)
+            part3 = random.choice(techinal_consequence)
+            st.text("Here is your technical excuse:")
+            excuse = f"I apologize, but unfortunately, {part1} {part2} {part3}"
+        elif techinal == True and recipient == "Mom":
+            excuse = ("Unfortunately, intervention is no longer possible — the kinetic-precision footwear delivery system of a mother has a 100% target-acquisition rate.")
         else:
             st.text("Here is your professional excuse:")
-            excuse = f"I apologize for the delay. Unfortunately, {part1} {part2} {part3}"
+            excuse = f"I apologize, but unfortunately, {part1} {part2} {part3}"
 
         st.info(excuse)
 
         st.caption("Highlight the text, and either right-click and copy, or press Ctrl+C/Cmd+C to copy...")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.info("**LazyDev_99** ⭐⭐⭐⭐⭐\n\nUsed the 'WiFi' excuse. Boss bought it. I've been sleeping for 4 hours.")
+        st.info("**Not_A_Robot** ⭐⭐⭐⭐⭐\n\nThis protocol is efficient for human deception.")
+
+    with col2:
+        st.info("**Elon M.** ⭐⭐⭐⭐⭐\n\nI should have used this instead of buying Twitter.")
+
+    # 2. The "Rigged" Input Form
+    st.write("### 🗳️ Add your own Vouch")
+    st.caption("We value your feedback (as long as it's good).")
+
+    user_review = st.text_input("Type your review here:", placeholder="e.g. This app saved my life...")
+
+    if st.button("Submit Review"):
+        if user_review:
+            # VISUAL EFFECT: Balloons make the user feel like they won
+            st.balloons()
+            
+            # THE JOKE: Ignore what they typed and print this instead
+            st.success("✅ Review Submitted Successfully!")
+            st.write("Your Review:")
+            st.warning(f"**You** ⭐⭐⭐⭐⭐\n\n\"This is the greatest piece of software ever written. I will donate all my money to the creator.\"")
+            st.caption("(Note: Our AI 'corrected' your review for clarity.)")
+        else:
+            st.error("You didn't type anything. Just like you didn't do your work.")
+
+with tab3:
+    st.header("Listen to Music to cope")
+    st.subheader("To cope with reaility 🥀")
+
+    song_name = st.text_input("Enter a song name or artist:", placeholder="e.g., Imagine dragons, Mozart, FatRat, Believer, etc..")
+    
+    if song_name:
+        yt = YTMusic()
+
+        results = yt.search(song_name, filter="songs", limit=5)
+
+        if len(results) > 0:
+            top_song = results[0]
+            video_id = top_song['videoId']
+            title = top_song['title']
+            artist = top_song['artists'][0]['name']
+
+            st.video(f"https://www.youtube.com/watch?v={video_id}")
+        else:
+            st.error("Song not found... Try another name?")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 with tab5:
     st.header("Mac apps by me you can check out!")
