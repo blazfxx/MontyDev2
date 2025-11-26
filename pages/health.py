@@ -43,7 +43,6 @@ with st.container():
 
     st.subheader("Your Day in a Chart")
 
-    # Build a clear table first
     stats_df = pd.DataFrame(
         {
             "Activity": [
@@ -63,32 +62,30 @@ with st.container():
 
     st.dataframe(stats_df, hide_index=True)
 
-    # Simple bar chart: one bar per activity
     chart_df = stats_df.set_index("Activity")
     st.bar_chart(chart_df)
 
-    # Simple survival score (0–100)
     score = 0
 
-    # Sleep
     if 7 <= sleep_hours <= 9:
         score += 30
     elif 5 <= sleep_hours < 7:
         score += 15
 
-    # Study
     if study_hours >= 3:
         score += 25
     elif study_hours >= 1:
         score += 10
 
-    # Screen time (less is better)
+    if screen_hours <= 4:
+        score += 25
     if screen_hours <= 4:
         score += 25
     elif screen_hours <= 7:
         score += 10
+    elif screen_hours >= 8:
+        score -= 15
 
-    # Exercise
     if exercise_minutes >= 45:
         score += 20
     elif exercise_minutes >= 15:
