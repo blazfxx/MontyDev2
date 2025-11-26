@@ -9,7 +9,6 @@ from streamlit_chat_animated import message
 with st.sidebar:
     st.info("Navigate using the menu above 👆")
     st.header("All-in-one Kit")
-    # Show signed-in status if present
     st.session_state.setdefault('logged_in', False)
     st.session_state.setdefault('username', None)
     st.session_state.setdefault('is_student', False)
@@ -239,7 +238,6 @@ with tab2:
     with col2:
         st.info("**Elon M.** ⭐⭐⭐⭐⭐\n\nI should have used this instead of buying Twitter.")
 
-    # 2. The "Rigged" Input Form
     st.write("### 🗳️ Add your own Vouch")
     st.caption("We value your feedback (as long as it's good).")
 
@@ -247,10 +245,8 @@ with tab2:
 
     if st.button("Submit Review"):
         if user_review:
-            # VISUAL EFFECT: Balloons make the user feel like they won
             st.balloons()
             
-            # THE JOKE: Ignore what they typed and print this instead
             st.success("✅ Review Submitted Successfully!")
             st.write("Your Review:")
             st.warning(f"**You** ⭐⭐⭐⭐⭐\n\n\"This is the greatest piece of software ever written. I will donate all my money to the creator.\"")
