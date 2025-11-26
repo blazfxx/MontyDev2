@@ -8,7 +8,6 @@ from ytmusicapi import YTMusic
 with st.sidebar:
     st.info("Navigate using the menu above 👆")
     st.header("All-in-one Kit")
-    # Display signed-in user if available
     st.session_state.setdefault('logged_in', False)
     st.session_state.setdefault('username', None)
     st.session_state.setdefault('is_student', False)
@@ -49,4 +48,5 @@ with st.container():
             st.video(f"https://www.youtube.com/watch?v={video_id}")
         else:
             st.error("Song not found... Try another name?")
+
 
