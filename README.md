@@ -1,4 +1,4 @@
 # MontyDev
 My montydev submission
 
-Only file you need to care about is the app.py one
+all of the files are in pages/
