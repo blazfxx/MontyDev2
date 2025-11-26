@@ -47,7 +47,6 @@ with st.container():
 col1, col2 = st.columns(2)
 
 with col1:
-        # Change Username
         st.markdown("### Change Username")
         new_username = st.text_input("New username", value="", key="new_username_setting")
         confirm_password_for_username = st.text_input("Current password", type="password", key="curpwd_username_setting")
@@ -72,7 +71,6 @@ with col1:
                         st.error("Failed to update username. Try a different one.")
 
 with col2:
-        # Change Password
         st.markdown("### Change Password")
         cur_pwd = st.text_input("Current password", type="password", key="curpwd_setting")
         new_pwd = st.text_input("New password", type="password", key="newpwd_setting")
@@ -91,14 +89,12 @@ with col2:
                     st.error("Current password is incorrect or update failed.")
 
 with st.container():
-        # Change user type (Student/Adult)
         st.markdown("### User Type")
         current_type = "Student" if st.session_state.get('is_student') else ("Adult" if st.session_state.get('is_adult') else "Student")
         index = 0 if st.session_state.get('is_student') else (1 if st.session_state.get('is_adult') else 0)
         type_choice = st.selectbox("I am a:", options=["Student", "Adult"], index=index, key="type_choice_setting")
         confirm_password_type = st.text_input("Confirm current password", type="password", key="curpwd_type_setting")
         if st.button("Change User Type"):
-            # Ensure user entered the current password for confirmation
             if not confirm_password_type:
                 st.error("Please confirm your current password.")
             else:
