@@ -12,7 +12,6 @@ import time
 init_db()
 init_finance_db()
 
-# Ensure session defaults exist on every page (won't overwrite existing state)
 st.session_state.setdefault('logged_in', False)
 st.session_state.setdefault('username', None)
 st.session_state.setdefault('is_student', False)
@@ -21,7 +20,6 @@ st.session_state.setdefault('is_adult', False)
 with st.sidebar:
     st.info("Navigate using the menu above 👆")
     st.header("All-in-one Kit")
-    # Show logged-in user info if present
     if st.session_state.get('logged_in'):
         st.success(f"Signed in as {st.session_state.get('username')}")
         if st.button("Sign Out"):
@@ -45,18 +43,15 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# Text to animate
 title_text = "All-in-one Kit"
 
-# Create placeholders
 title_placeholder = st.empty()
 
-# Animate title
 displayed_text = ""
 for char in title_text:
     displayed_text += char
     title_placeholder.markdown(f"<h1 style='text-align: center; color: red'>{displayed_text}</h1>", unsafe_allow_html=True)
-    time.sleep(0.09)  # Adjust speed here
+    time.sleep(0.09)
 
 
 
