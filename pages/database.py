@@ -1,12 +1,10 @@
-# In pages/database.py
 
 import sqlite3
 import bcrypt
 
-DATABASE_NAME = 'users.db' # Define the consistent file name
+DATABASE_NAME = 'users.db'
 
 def get_db_connection():
-    # Helper to connect to the database consistently
     return sqlite3.connect(DATABASE_NAME)
 
 def init_db():
@@ -26,7 +24,6 @@ def init_db():
     conn.commit()
     conn.close()
 
-    # Migration: ensure 'profession' column exists (for older DBs)
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("PRAGMA table_info(users)")
@@ -36,7 +33,6 @@ def init_db():
     conn.commit()
     conn.close()
 
-    # Flashcards table (per-user)
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('''
@@ -53,13 +49,12 @@ def init_db():
     conn.close()
 
 def add_user(username, email, password, student, adult, profession=''):
-    # This function now uses the consistent get_db_connection()
     password_bytes = password.encode('utf-8')
     hashed_psw = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
     hashed_psw_str = hashed_psw.decode('utf-8')
 
     try:
-        conn = get_db_connection() # <-- CORRECTED to use 'users.db'
+        conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('INSERT INTO users (username, email, password, student, adult, profession) VALUES (?, ?, ?, ?, ?, ?)', (username, email, hashed_psw_str, student, adult, profession))
         conn.commit()
@@ -68,13 +63,11 @@ def add_user(username, email, password, student, adult, profession=''):
     except sqlite3.IntegrityError:
         return False
 
-# In database.py
 
 def verify_user(username, password):
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # NOTICE: We are now selecting student and adult columns too!
     cursor.execute('SELECT password, student, adult, profession FROM users WHERE username = ?', (username,))
     user_data = cursor.fetchone()
     conn.close()
@@ -82,15 +75,13 @@ def verify_user(username, password):
     if user_data:
         stored_hash = user_data[0].encode('utf-8')
         if bcrypt.checkpw(password.encode('utf-8'), stored_hash):
-            # Instead of just returning True, we return a Dictionary with data
             return {
                 "verified": True,
-                "is_student": bool(user_data[1]), # This grabs the student value
-                "is_adult": bool(user_data[2]),   # This grabs the adult value
+                "is_student": bool(user_data[1]),
+                "is_adult": bool(user_data[2]),
                 "profession": user_data[3] if len(user_data) > 3 else ''
             }
     
-    # If password fails or user doesn't exist
     return {"verified": False, "is_student": False, "is_adult": False}
 
 
@@ -104,7 +95,6 @@ def username_available(username):
 
 
 def update_username(old_username, new_username):
-    # Returns True if updated, False otherwise (e.g., new username taken)
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -199,7 +189,6 @@ def init_finance_db():
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # Table to store the user's Monthly Income target
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS user_income (
             username TEXT PRIMARY KEY,
@@ -207,7 +196,6 @@ def init_finance_db():
         )
     ''')
     
-    # Table to store individual expenses
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS expenses (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
